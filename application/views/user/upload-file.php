@@ -75,7 +75,7 @@
 <script language="JavaScript" type="text/javascript">
 	function hapusData(id){
 		if (confirm("Apakah anda yakin akan menghapus data ini?")){
-		  	window.location.href = 'user/hapusfile/' + id;
+		  	window.location.href = 'hapusfile/' + id;
 		}
 	}
 </script>

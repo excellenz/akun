@@ -118,4 +118,12 @@ class User extends CI_Controller
 			redirect('user/upload');
 		}
 	}
+
+	public function hapusfile($id)
+	{
+		$file = $this->db->get_where('file', ['id' => $id])->row_array();
+		$this->db->delete('file', ['id' => $id]);
+		unlink(FCPATH . 'assets/files/' . $file['name']);
+		redirect('user/upload');
+	}
 }
