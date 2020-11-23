@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 23 Nov 2020 pada 00.29
--- Versi server: 10.1.37-MariaDB
--- Versi PHP: 7.1.26
+-- Waktu pembuatan: 23 Nov 2020 pada 06.55
+-- Versi server: 10.4.13-MariaDB
+-- Versi PHP: 7.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -35,21 +34,6 @@ CREATE TABLE `file` (
   `file_type` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `file`
---
-
-INSERT INTO `file` (`id`, `date`, `user_email`, `file_type`, `name`) VALUES
-(1, 1, 'hendrasaleh@gmail.com', 'pdf', 'jadwal-pat.pdf'),
-(2, 1606085925, 'hendrasaleh@gmail.com', 'pdf', 'zyacbt.pdf'),
-(3, 1606086219, 'hendrasaleh@gmail.com', 'doc', 'OPINI_-_IDA_LESTARI_(HES7).doc'),
-(4, 1606086274, 'hendrasaleh@gmail.com', 'xlsx', 'Data_Rekap_Hasil_Tes.xlsx'),
-(5, 1606086341, 'hendrasaleh@gmail.com', 'PDF', '7b-01-k.PDF'),
-(6, 1606086379, 'hendrasaleh@gmail.com', 'docx', 'LED_PRODI_AS_HK_fiks.docx'),
-(7, 1606086680, 'hendrasaleh@gmail.com', 'pptx', 'Draft_Kurikulum.pptx'),
-(8, 1606086768, 'hendrasaleh@gmail.com', 'ppt', 'Draft_Kurikulum.ppt'),
-(9, 1606086845, 'hendrasaleh@gmail.com', 'xls', 'form-soal-ganda.xls');
 
 -- --------------------------------------------------------
 
@@ -213,7 +197,7 @@ ALTER TABLE `user_sub_menu`
 -- AUTO_INCREMENT untuk tabel `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
