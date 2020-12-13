@@ -79,6 +79,7 @@ class User extends CI_Controller
 		$data['file'] = $this->db->get_where('file', ['user_email' => $this->session->userdata('email')])->result_array();
 
 		$this->form_validation->set_rules('email', 'Email', 'required|trim');
+		$this->form_validation->set_rules('file', '','callback_file_check');
 
 		if ($this->form_validation->run() == false) {
 			$this->load->view('templates/header', $data);
@@ -124,6 +125,30 @@ class User extends CI_Controller
 		$file = $this->db->get_where('file', ['id' => $id])->row_array();
 		$this->db->delete('file', ['id' => $id]);
 		unlink(FCPATH . 'assets/files/' . $file['name']);
+		$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert"> File berhasil dihapus!</div>');
 		redirect('user/upload');
 	}
+
+	public function file_check()
+	{
+        $allowed_type_file = array('application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.documen', 'application/pdf', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $mime = get_mime_by_extension($_FILES['file']['name']);
+
+        if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "") {
+            if (in_array($mime, $allowed_type_file)) {
+                if ($_FILES['file']['size'] > 6144000) {
+                    $this->form_validation->set_message('file_check', 'Ukuran file terlalu besar! Pastikan kurang dari 5MB!');
+                    return FALSE;
+                } else {
+                return TRUE;                    
+                }
+            } else {
+                $this->form_validation->set_message('file_check', 'Jenis file tidak diizinkan!');
+                return FALSE;
+            }
+        } else {
+            $this->form_validation->set_message('file_check', 'Pilih file untuk diupload!');
+                return FALSE;
+        }
+    }
 }

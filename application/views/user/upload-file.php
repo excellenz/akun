@@ -6,6 +6,7 @@
 	<h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 	<div class="col-lg-8">
 		<?= $this->session->flashdata('message'); ?>
+		<?= form_error('file', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
 	</div>
 
 	<div class="row">
@@ -21,7 +22,7 @@
 					<div class="col-sm-2">File</div>
 					<div class="col-sm-10">
 						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="file" name="file">
+							<input type="file" class="custom-file-input" id="file" name="file" accept="application/pdf, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.ms-powerpoint, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 							<label class="custom-file-label" for="file">Choose file</label>
 						</div>
 					</div>
