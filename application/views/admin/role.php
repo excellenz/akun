@@ -7,7 +7,7 @@
 
   <div class="row">
   	<div class="col-lg-6">
-  		<?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+  		<?= form_error('role', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
 
   		<?= $this->session->flashdata('message'); ?>
 
@@ -30,8 +30,8 @@
 		      <td><?= $r['role']; ?></td>
 		      <td>
 		      		<a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-warning">access</a>
-		      		<a href="" class="badge badge-success">edit</a>
-		      		<a href="" class="badge badge-danger">delete</a>
+		      		<a href="editrole/<?= $r['id']; ?>" class="badge badge-success">edit</a>
+		      		<a href="javascript:hapusData(<?= $r['id']; ?>)" class="badge badge-danger">delete</a>
 		      </td>
 		    </tr>
 			<?php
@@ -45,6 +45,14 @@
 
 </div>
 <!-- /.container-fluid -->
+
+<script language="JavaScript" type="text/javascript">
+	function hapusData(id){
+		if (confirm("Apakah anda yakin akan menghapus data ini?")){
+		  	window.location.href = 'deleterole/' + id;
+		}
+	}
+</script>
 
 </div>
 <!-- End of Main Content -->

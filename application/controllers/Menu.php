@@ -18,6 +18,7 @@ class Menu extends CI_Controller
 		$data['menu'] = $this->db->get('user_menu')->result_array();
 
 		$this->form_validation->set_rules('menu', 'Menu', 'required');
+		$this->form_validation->set_rules('sequence', 'Sequence', 'required');
 
 		if ($this->form_validation->run() == false) {
 			$this->load->view('templates/header', $data);
@@ -26,7 +27,11 @@ class Menu extends CI_Controller
 			$this->load->view('menu/index', $data);
 			$this->load->view('templates/footer');
 		} else {
-			$this->db->insert('user_menu', ['menu' => $this->input->post('menu')]);
+			$data = [
+				'menu' => $this->input->post('menu'),
+				'sequence' => $this->input->post('sequence')
+			];
+			$this->db->insert('user_menu', $data);
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> New menu added!</div>');
 			redirect('menu');
 		}
@@ -132,11 +137,19 @@ class Menu extends CI_Controller
 		}
 	}
 
+	public function hapusmenu($id)
+	{
+		
+		$this->db->delete('user_menu', ['id' => $id]);
+		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Menu deleted!</div>');
+		redirect('menu');
+	}
+
 	public function hapussubmenu($id)
 	{
 		
 		$this->db->delete('user_sub_menu', ['id' => $id]);
-		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Submenu berhasil dihapus!</div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Submenu deleted!</div>');
 		redirect('menu/submenu');
 	}
 }

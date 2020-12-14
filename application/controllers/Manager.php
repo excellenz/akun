@@ -26,13 +26,50 @@ class Manager extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard';
+		$data['title'] = 'Upload File';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data['file'] = $this->db->get_where('file', ['user_email' => $this->session->userdata('email')])->result_array();
 
-		$this->load->view('templates/header', $data);
-		$this->load->view('templates/sidebar', $data);
-		$this->load->view('templates/topbar', $data);
-		$this->load->view('manager/index', $data);
-		$this->load->view('templates/footer');
+		$this->form_validation->set_rules('email', 'Email', 'required|trim');
+		$this->form_validation->set_rules('file', '','callback_file_check');
+
+		if ($this->form_validation->run() == false) {
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/sidebar', $data);
+			$this->load->view('templates/topbar', $data);
+			$this->load->view('manager/index', $data);
+			$this->load->view('templates/footer');
+		} else {
+			
+			$upload_file = $_FILES['file']['name'];
+			$pecah = explode(".", $upload_file);
+			$file_type = $pecah[1];
+
+			if ($upload_file) {
+				$config['allowed_types'] = 'doc|xls|ppt|docx|xlsx|pptx|pdf';
+				$config['max_size']      = '5120';
+				$config['upload_path']   = './assets/files/';
+
+				$this->load->library('upload', $config);
+
+				if ($this->upload->do_upload('file')) {
+					$name = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			$data = [
+				'date' => time(),
+				'user_email' => $this->input->post('email'),
+				'file_type' => $file_type,
+				'name' => $name
+			];
+
+			$this->db->insert('file', $data);
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> File berhasil diupload!</div>');
+			redirect('manager/index');
+		}
 	}
+
 }
