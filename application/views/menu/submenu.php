@@ -42,7 +42,7 @@
 				      <td><?= $sm['is_active']; ?></td>
 				      <td>
 				      		<a href="editsubmenu/<?= $sm['id']; ?>" class="badge badge-success">edit</a>
-				      		<a href="" class="badge badge-danger">delete</a>
+				      		<a href="javascript:hapusData(<?= $sm['id']; ?>)" class="badge badge-danger">delete</a>
 				      </td>
 				    </tr>
 					<?php
@@ -56,6 +56,14 @@
 
         </div>
         <!-- /.container-fluid -->
+
+		<script language="JavaScript" type="text/javascript">
+			function hapusData(id){
+				if (confirm("Apakah anda yakin akan menghapus data ini?")){
+				  	window.location.href = 'hapussubmenu/' + id;
+				}
+			}
+		</script>
 
       </div>
       <!-- End of Main Content -->

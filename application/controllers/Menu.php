@@ -14,6 +14,7 @@ class Menu extends CI_Controller
 		$data['title'] = 'Menu Management';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+		$this->db->order_by('sequence', 'ASC');
 		$data['menu'] = $this->db->get('user_menu')->result_array();
 
 		$this->form_validation->set_rules('menu', 'Menu', 'required');
@@ -129,5 +130,13 @@ class Menu extends CI_Controller
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Submenu edited!</div>');
 			redirect('menu/submenu');
 		}
+	}
+
+	public function hapussubmenu($id)
+	{
+		
+		$this->db->delete('user_sub_menu', ['id' => $id]);
+		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Submenu berhasil dihapus!</div>');
+		redirect('menu/submenu');
 	}
 }

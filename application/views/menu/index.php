@@ -32,7 +32,7 @@
 		      <td><?= $m['sequence']; ?></td>
 		      <td>
 		      		<a href="menu/editmenu/<?= $m['id']; ?>" class="badge badge-success">edit</a>
-		      		<a href="" class="badge badge-danger">delete</a>
+		      		<a href="javascript:hapusData(<?= $m['id']; ?>)" class="badge badge-danger">delete</a>
 		      </td>
 		    </tr>
 			<?php
@@ -46,6 +46,14 @@
 
 </div>
 <!-- /.container-fluid -->
+
+<script language="JavaScript" type="text/javascript">
+	function hapusData(id){
+		if (confirm("Apakah anda yakin akan menghapus data ini?")){
+		  	window.location.href = 'hapusmenu/' + id;
+		}
+	}
+</script>
 
 </div>
 <!-- End of Main Content -->
