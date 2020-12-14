@@ -17,6 +17,7 @@
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">Menu</th>
+		      <th scope="col">Sequence</th>
 		      <th scope="col">Action</th>
 		    </tr>
 		  </thead>
@@ -28,8 +29,9 @@
 		    <tr>
 		      <th scope="row"><?= $i; ?></th>
 		      <td><?= $m['menu']; ?></td>
+		      <td><?= $m['sequence']; ?></td>
 		      <td>
-		      		<a href="" class="badge badge-success">edit</a>
+		      		<a href="menu/editmenu/<?= $m['id']; ?>" class="badge badge-success">edit</a>
 		      		<a href="" class="badge badge-danger">delete</a>
 		      </td>
 		    </tr>
@@ -62,7 +64,10 @@
 	      <div class="modal-body">
 	        <div class="form-group">
 			    <input type="text" class="form-control" id="menu" name="menu" placeholder="Menu name">
-		  </div>
+		  	</div>
+		  	<div class="form-group">
+			    <input type="text" class="form-control" id="sequence" name="sequence" placeholder="Menu sequence">
+		  	</div>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
