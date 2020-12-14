@@ -126,7 +126,7 @@ class Auth extends CI_Controller
 			'smtp_user' => 'teamexcellenz@gmail.com',
 			'smtp_pass' => 'h4k4n3kunXXX',
 			'smtp_port' => 465,
-			'mail_type' => 'html',
+			'mailtype' => 'html',
 			'charset'   => 'utf-8',
 			'newline'   => "\r\n"
 		];
@@ -139,7 +139,7 @@ class Auth extends CI_Controller
 
 		if($type == 'verify') {	
 		$this->email->subject('Account Verification');
-		$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'auth/verify?email=' . $this->input->post('email') . '&token=' . $token .'">Activate</a>');
+		$this->email->message('Click this link to verify your account : <a href="'. base_url(). 'auth/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) .'">Activate</a>');
 		}
 
 		if($this->email->send()){
