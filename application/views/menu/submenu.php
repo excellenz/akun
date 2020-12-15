@@ -16,7 +16,7 @@
           		<?= $this->session->flashdata('message'); ?>
 
           		<a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSubMenuModal">Add New Submenu</a>
-          		<table class="table table-hover">
+          		<table class="table table-hover table-responsive">
 				  <thead>
 				    <tr>
 				      <th scope="col">#</th>

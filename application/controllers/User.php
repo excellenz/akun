@@ -63,6 +63,7 @@ class User extends CI_Controller
 				}
 			}
 
+			$this->db->set('date_modified', time());
 			$this->db->set('name', $name);
 			$this->db->where('email', $email);
 			$this->db->update('user');
@@ -172,11 +173,11 @@ class User extends CI_Controller
 			$new_password = $this->input->post('new_password1');
 			if (!password_verify($current_password, $data['user']['password'])) {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Wrong current password!</div>');
-		redirect('user/changepassword');
+				redirect('user/changepassword');
 			} else {
 				if ($current_password == $new_password) {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> New password cannot be the same as current password!</div>');
-		redirect('user/changepassword');
+					redirect('user/changepassword');
 				} else {
 					// password sudah ok
 					$password_hash = password_hash($new_password, PASSWORD_DEFAULT);
@@ -185,8 +186,11 @@ class User extends CI_Controller
 					$this->db->where('email', $this->session->userdata('email'));
 					$this->db->update('user');
 
-					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Password changed!</div>');
-		redirect('user/changepassword');
+					$this->session->unset_userdata('email');
+					$this->session->unset_userdata('role_id');
+
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Password changed! Please login with new password.</div>');
+					redirect('auth');
 				}
 			}
 		}

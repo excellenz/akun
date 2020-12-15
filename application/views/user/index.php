@@ -23,7 +23,7 @@
                   <p class="card-text">
                     <small class="text-muted">Member since <?= date('d F Y', $user['date_created']); ?></small>
                     <br>
-                    <small class="text-muted">Profile updated <?= date('d F Y', $user['date_modified']); ?></small>
+                    <small class="text-muted">Profile updated <?= date('d F Y H:i', $user['date_modified']) . ' WIB'; ?></small>
                   </p>
                   <p class="card-text"></p>
                 </div>
