@@ -112,4 +112,69 @@ class Admin extends CI_Controller
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Access Changed!</div>');
 	}
+
+	public function users()
+	{
+		$data['title'] = 'User Management';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$this->db->select('*');
+		$this->db->from('user_role');
+		$this->db->join('user', 'user_role.id = user.role_id');
+		$this->db->order_by('user_role.id', 'ASC');
+		$data['users'] = $this->db->get()->result_array();
+		
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/users', $data);
+		$this->load->view('templates/footer');
+		
+	}
+
+	public function manageuser($id)
+	{
+		$data['title'] = 'Manage User';
+		$data['role'] = $this->db->get('user_role')->result_array();
+		$this->db->select('*');
+		$this->db->from('user');
+		$this->db->join('user_role', 'user_role.id = user.role_id');
+		$this->db->where('user.id', $id);
+		$this->db->order_by('user_role.id', 'ASC');
+		$data['user'] = $this->db->get()->row_array();
+		
+
+		$this->form_validation->set_rules('name', 'Name', 'required|trim');
+		$this->form_validation->set_rules('role_id', 'Role', 'required|trim');
+
+		if ($this->form_validation->run() == false) {
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/sidebar', $data);
+			$this->load->view('templates/topbar', $data);
+			$this->load->view('admin/manage-user', $data);
+			$this->load->view('templates/footer');
+		} else {
+			$email = $this->input->post('email');
+			$data = [
+				'name' => htmlspecialchars($this->input->post('name', true)),
+				'role_id' => $this->input->post('role_id'),
+				'is_active' => $this->input->post('is_active'),
+				'date_modified' => time()
+			];
+
+			$this->db->where('email', $email);
+			$this->db->update('user', $data);
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> User edited!</div>');
+			redirect('admin/users');
+		}
+
+	}
+
+	public function deleteuser($id)
+	{
+		
+		$this->db->delete('user', ['id' => $id]);
+		$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> User deleted!</div>');
+		redirect('admin/users');
+	}
 }
